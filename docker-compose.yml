@@ -1,46 +1,53 @@
 
 services:
+
+# Servicio de la API de tareas
   api:
-    build: ./app
-    container_name: api_tareas
+    build: ./app # Ruta al Dockerfile de la aplicación
+    container_name: api_tareas # Nombre del contenedor para la API de tareas
     ports:
-      - "${API_PORT}:5000"
-    environment:
-      - MYSQL_HOST=${MYSQL_HOST}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-    depends_on:
+      - "${API_PORT}:5000" # Puerto para acceder a la API desde el host. tiene el formato ${VARIABLE_ENTORNO} porque se lee del archivo .env
+    environment: # Variables de entorno para la configuración de la base de datos
+      - MYSQL_HOST=${MYSQL_HOST} # Host de la base de datos. tiene el formato ${VARIABLE_ENTORNO} porque se lee del archivo .env
+      - MYSQL_USER=${MYSQL_USER} # Usuario de la base de datos. tiene el formato ${VARIABLE_ENTORNO} porque se lee del archivo .env
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD} # Contraseña del usuario de la base de datos. tiene el formato ${VARIABLE_ENTORNO} porque se lee del archivo .env
+      - MYSQL_DATABASE=${MYSQL_DATABASE} # Nombre de la base de datos. tiene el formato ${VARIABLE_ENTORNO} porque se lee del archivo .env
+    depends_on: # Dependencia para asegurar que la base de datos esté lista antes de iniciar la API
       - db
     networks:
       - backend
+
+
+# Servicio de la base de datos MySQL
   db:
-    image: mysql:8.0.44
-    container_name: db_tareas
+    image: mysql:8.0.44 # Imagen oficial de MySQL
+    container_name: db_tareas # Nombre del contenedor para la base de datos
     ports:
-      - "${MYSQL_PORT}:3306"
-    restart: always
-    environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-    volumes:
+      - "${MYSQL_PORT}:3306" # Puerto para acceder a MySQL desde el host. tiene el formato ${VARIABLE_ENTORNO} porque se lee del archivo .env
+    restart: always # Reinicia el contenedor automáticamente en caso de fallo
+    environment: # Variables de entorno para la configuración de MySQL
+      MYSQL_DATABASE: ${MYSQL_DATABASE} # Nombre de la base de datos. tiene el formato ${VARIABLE_ENTORNO} porque se lee del archivo .env
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD} # Contraseña del usuario root. tiene el formato ${VARIABLE_ENTORNO} porque se lee del archivo .env
+    volumes: # Volumen para persistir los datos de la base de datos MySQL
       - db_data:/var/lib/mysql
     networks:
       - backend
+
+ # Servicio de Adminer para la gestión de la base de datos     
   adminer:
-    image: adminer
-    container_name: adminer
-    restart: always
+    image: adminer # Imagen oficial de Adminer
+    container_name: adminer # Nombre del contenedor para Adminer
+    restart: always # Reinicia el contenedor automáticamente en caso de fallo
     ports:
-      - ${ADMINER_PORT}:8080 
-    depends_on:
+      - ${ADMINER_PORT}:8080 # Puerto para acceder a Adminer desde el host. tiene el formato ${VARIABLE_ENTORNO} porque se lee del archivo .env
+    depends_on: # Dependencia para asegurar que la base de datos esté lista antes de iniciar Adminer
       - db
     networks:
       - backend
 
 
-volumes:
+volumes: # Volumen para persistir los datos de la base de datos MySQL
   db_data:
 
-networks:
-  backend:
+networks: # Red de backend para la comunicación entre servicios. se elige esta opción por simplicidad y seguridad porque no es necesario exponer los servicios internamente.
+  backend: 
