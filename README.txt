@@ -23,7 +23,7 @@ a continuacion en el siguiente link se encuentra un documento donde se muestra l
 y que tanto adminer como la API responden correctamente. ademas en la documentacion se justifica las tecnologias elegidas y 
 se fundamenta las elecciones tomadas.
 
-LINK: 
+LINK: https://drive.google.com/file/d/1UQ7b0-f4aEYFdxzY02V-fC9wCBrK0byA/view?usp=sharing
 
 
 ACLARACION: el archivo .env no es recomendable subirlo al github junto al proyecto de docker-compose por temas de seguridad,

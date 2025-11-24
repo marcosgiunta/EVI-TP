@@ -30,6 +30,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD} # Contraseña del usuario root. tiene el formato ${VARIABLE_ENTORNO} porque se lee del archivo .env
     volumes: # Volumen para persistir los datos de la base de datos MySQL
       - db_data:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d
     networks:
       - backend
 

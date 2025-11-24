@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS tareas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    descripcion VARCHAR(255),
+    estado VARCHAR(50) DEFAULT 'ToDo'
+);
