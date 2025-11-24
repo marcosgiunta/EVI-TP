@@ -16,7 +16,7 @@ para la API:
 http://localhost:5000/tareas
 
 
-luego se pueden hacer diferentes pruebas de get,delete,post y put con la api desde postman,thunder client,etc. para verficiar el correcto
+luego se pueden hacer diferentes pruebas de get,delete,post y put con la api desde postman,thunder client,etc. para verificar el correcto
 funcionamiento de la API.
 
 a continuacion en el siguiente link se encuentra un documento donde se muestra la evidencia de que el docker-compose funciona
